@@ -113,4 +113,4 @@ if __name__ == "__main__":
     if in_args.nogui:
         run(points=in_args.points.strip(), file_path=in_args.file.strip())
     else:
-        wm.open_window()
+        wm.open_window(points=in_args.points.strip(), file_path=in_args.file.strip())

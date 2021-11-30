@@ -28,5 +28,3 @@ class Plotter:
         plt.xlim((x_min - 1, x_max + 1))
         plt.ylim((x_min - 1, x_max + 1))
         plt.show()
-
-

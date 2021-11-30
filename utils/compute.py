@@ -19,6 +19,7 @@ class LeastSquare:
     def get_function(self):
         def func(x: float):
             return self.m * x + self.b
+
         return func
 
     def get_points_lists(self):
@@ -76,5 +77,3 @@ class LeastSquare:
         n = len(self.get_points())
         b = (sum_y - self.m * sum_x) / n
         return b
-
-
