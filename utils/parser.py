@@ -10,7 +10,7 @@ class PointsParser:
             result = eval(f"[{points_string.strip('[]')}]")
             return result
         except SyntaxError:
-            return []
+            return None
 
     @staticmethod
     def point_from_string(point_string: str = ""):

@@ -21,10 +21,14 @@ class LeastSquare:
             return self.m * x + self.b
         return func
 
-    def get_errors_table(self):
+    def get_points_lists(self):
         xs, ys = zip(*self.get_points())
         func = self.get_function()
         fys = [func(x) for x in xs]
+        return xs, ys, fys
+
+    def get_errors_table(self):
+        xs, ys, fys = self.get_points_lists()
         table = "X\tY\tF(X)\tERR"
         for x, y, fy in zip(xs, ys, fys):
             table += f"\n{x}\t{y}\t{fy}\t{fy - y}"

@@ -2,6 +2,7 @@ import argparse
 from interface import interface as wm
 from utils.compute import LeastSquare
 from utils.parser import PointsParser
+from utils.plotter import Plotter
 
 
 def retrieve_points_1by1():
@@ -58,15 +59,19 @@ retrieve_points = {
 
 
 def after_compute(l_square: LeastSquare):
+    plotter = Plotter(*l_square.get_points_lists(), l_square.get_function_string())
     while True:
         print("What do you want to do: ")
         print("1. Print errors table")
-        print("2. Compute f(x)")
-        print("3. Exit")
+        print("2. Show function graph")
+        print("3. Compute f(x)")
+        print("4. Exit")
         choice = input(">> ")
         if choice == "1":
             print(l_square.get_errors_table())
         elif choice == "2":
+            plotter.plot()
+        elif choice == "3":
             func = l_square.get_function()
             while True:
                 in_x = input("X = ")
