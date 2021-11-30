@@ -1,0 +1,2 @@
+class LSquereError(Exception):
+    pass
