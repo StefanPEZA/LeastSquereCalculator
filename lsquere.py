@@ -61,7 +61,6 @@ retrieve_points = {
 def after_compute(l_square: LeastSquare):
     plotter = Plotter(*l_square.get_points_lists(), l_square.get_function_string())
     while True:
-        print("What do you want to do: ")
         print("1. Print errors table")
         print("2. Show function graph")
         print("3. Compute f(x)")
