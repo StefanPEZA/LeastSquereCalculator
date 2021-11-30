@@ -95,9 +95,9 @@ def run(points: str = None, file_path: str = None):
         choice = input(">> ")
         points = retrieve_points.get(choice, "1")()
         l_square.add_points(points)
-        l_square.compute_function()
-        print("Computed function is: " + l_square.get_function_string())
-        after_compute(l_square)
+    l_square.compute_function()
+    print("Computed function is: " + l_square.get_function_string())
+    after_compute(l_square)
 
 
 if __name__ == "__main__":
