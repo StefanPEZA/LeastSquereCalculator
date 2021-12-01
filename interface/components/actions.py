@@ -1,5 +1,3 @@
-from interface.components.entries import Entries
-from tkinter import *
 from tkinter import ttk, filedialog, simpledialog
 from utils.parser import PointsParser
 

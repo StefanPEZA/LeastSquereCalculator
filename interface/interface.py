@@ -16,19 +16,24 @@ def config_root():
     global root
     root.title("Least Square Calculator")
     root.resizable(False, False)
-    root.minsize(width=640, height=480)
+    root.minsize(width=640, height=500)
+
+
+def update_info_label(text, fg="black"):
+    global info_label
+    info_label.config(text=text, fg=fg)
 
 
 def compute_func():
     global l_square, entries, info_label
     points = try_get_points(entries)
     if not points:
-        info_label.config(text="Invalid arguments!", fg="red")
+        update_info_label(text="Invalid arguments!", fg="red")
         print("Invalid arguments!")
         return
     l_square = LeastSquare(points)
     l_square.compute_function()
-    info_label.config(text="Compute was successful!", fg="green")
+    update_info_label(text="Compute was successful!", fg="green")
     print("Compute was successful!")
 
 
@@ -44,12 +49,12 @@ def load_points_from_file():
     file_path = open_filedialog()
     points = load_from_file(file_path)
     if not points:
-        info_label.config(text="Input File Not Found!", fg="red")
+        update_info_label(text="Input File Not Found!", fg="red")
         print("Input File Not Found!")
         return
     entries.clear_all()
     entries.add_from_points(points)
-    info_label.config(text="Points loaded successfully!", fg="green")
+    update_info_label(text="Points loaded successfully!", fg="green")
     print("Points loaded successfully!")
 
 
@@ -57,12 +62,12 @@ def load_points_from_string():
     global info_label, entries
     points = load_from_string()
     if not points:
-        info_label.config(text="Not correct format!", fg="red")
+        update_info_label(text="Not correct format!", fg="red")
         print("Not correct format!")
         return
     entries.clear_all()
     entries.add_from_points(points)
-    info_label.config(text="Points loaded successfully!", fg="green")
+    update_info_label(text="Points loaded successfully!", fg="green")
     print("Points loaded successfully!")
 
 
@@ -79,7 +84,7 @@ def parse_args(points: str, file_path: str):
     elif file_path:
         result = load_from_file(file_path)
         if not result:
-            info_label.config(text="Input File Not Found!", fg="red")
+            update_info_label(text="Input File Not Found!", fg="red")
             print("Input File Not Found!")
             result = []
     return result
@@ -96,7 +101,7 @@ def open_window(points: str = None, file_path: str = None):
     pad = {"padx": 2, "pady": 2}
 
     info_label = Label(frm, text="", justify="center", width=40)
-    info_label.grid(column=2, row=0, **pad)
+    info_label.grid(column=2, row=0, padx=2, pady=2)
 
     Label(frm, text="X").grid(column=0, row=0, **pad)
     Label(frm, text="Y").grid(column=1, row=0, **pad)
