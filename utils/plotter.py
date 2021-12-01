@@ -15,11 +15,12 @@ class Plotter:
         xy1 = (self.xs[0], self.fys[0])
         xy2 = (self.xs[-1], self.fys[-1])
         plt.axline(xy1, xy2, color="red")
+        plt.plot(self.xs, self.ys, color="blue", linewidth=1, alpha=0.3)
 
         for i in range(len(self.xs)):
-            plt.vlines(self.xs[i], ymin=self.ys[i], ymax=self.fys[i], color="black", linestyles=":")
+            plt.vlines(self.xs[i], ymin=self.ys[i], ymax=self.fys[i], color="black", linestyles=":", alpha=0.8)
 
-        plt.scatter(self.xs, self.ys, marker="o", color="green")
+        plt.scatter(self.xs, self.ys, marker="o", color="green", alpha=0.8)
         for i in range(len(self.xs)):
             plt.annotate(self.labels[i], (self.xs[i], self.ys[i] + 0.2))
 

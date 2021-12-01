@@ -31,12 +31,13 @@ class LeastSquare:
     def get_errors_table(self):
         xs, ys, fys = self.get_points_lists()
         table = "X\t Y\t F(X)\t ERR"
+        table += "\n---\t ---\t ---\t ---"
         for x, y, fy in zip(xs, ys, fys):
             x = round(x, 3)
             y = round(y, 3)
             fy = round(fy, 3)
             table += f"\n{x}\t {y}\t {fy}\t {round(fy - y, 3)}"
-        return table
+        return table + "\n"
 
     def get_function_string(self):
         func_str = f"y = {round(self.m, 4)} * x + {round(self.b, 4)}"

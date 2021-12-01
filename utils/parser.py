@@ -6,6 +6,8 @@ class PointsParser:
         :param points_string: "(x1, y1), (x2, y2), ... (x_, y_)"
         :return:
         """
+        if not points_string:
+            return None
         try:
             result = eval(f"[{points_string.strip('[]')}]")
             return result
@@ -19,6 +21,8 @@ class PointsParser:
         :param point_string: "(x, y)"
         :return:
         """
+        if not point_string:
+            return None
         try:
             result = eval(f"{point_string.strip('[]')}")
             return result
