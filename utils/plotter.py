@@ -11,6 +11,8 @@ class Plotter:
 
     def plot(self):
         print("Plotting... ")
+        plt.clf()
+        plt.cla()
         plt.title("Least Square Function: " + self.title)
         xy1 = (self.xs[0], self.fys[0])
         xy2 = (self.xs[-1], self.fys[-1])
