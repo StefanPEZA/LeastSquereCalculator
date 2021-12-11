@@ -6,8 +6,9 @@ from interface.components.actions import try_get_points, load_from_file, \
     load_from_string, open_filedialog
 from utils.plotter import Plotter
 
-root = Tk()
 l_square = LeastSquare([])
+
+root = Tk()
 entries = Entries(root)
 info_label = Label(root)
 
@@ -17,6 +18,9 @@ def config_root():
     root.title("Least Square Calculator")
     root.resizable(False, False)
     root.minsize(width=640, height=500)
+    frm = Frame(root)
+    frm.grid(padx=50, pady=10)
+    return frm
 
 
 def update_info_label(text, fg="black"):
@@ -71,6 +75,17 @@ def load_points_from_string():
     print("Points loaded successfully!")
 
 
+def calculate_function(entry: ttk.Entry, label: Label):
+    try:
+        global l_square
+        func = l_square.get_function()
+        x = float(entry.get())
+        result = round(func(x), 4)
+        label.config(text=str(result))
+    except ValueError:
+        return
+
+
 def print_error_table():
     global l_square
     print(l_square.get_errors_table())
@@ -90,13 +105,47 @@ def parse_args(points: str, file_path: str):
     return result
 
 
+def render_left_side(frm, pad):
+    load_file_button = ttk.Button(frm, cursor='hand2', text="Load from file", command=load_points_from_file, width=40)
+    load_file_button.grid(column=2, row=1, **pad)
+
+    load_str_button = ttk.Button(frm, cursor='hand2', text="Load From String", command=load_points_from_string, width=40)
+    load_str_button.grid(column=2, row=2, **pad)
+
+    add_button = ttk.Button(frm, text="Add Point", command=entries.add_entry, width=40)
+    add_button.grid(column=2, row=3, **pad)
+
+    remove_button = ttk.Button(frm, cursor='hand2', text="Remove Point", command=entries.remove_entry, width=40)
+    remove_button.grid(column=2, row=4, **pad)
+
+    compute_button = ttk.Button(frm, cursor='hand2', text="Compute", command=compute_func, width=40)
+    compute_button.grid(column=2, row=5, **pad)
+
+    show_button = ttk.Button(frm, cursor='hand2', text="Show Function Graph", command=show_graph, width=40)
+    show_button.grid(column=2, row=6, **pad)
+
+    show_button = ttk.Button(frm, cursor='hand2', text="Print Errors Table", command=print_error_table, width=40)
+    show_button.grid(column=2, row=7, **pad)
+
+    calculate_frm = Frame(frm)
+    calculate_frm.grid(column=2, row=8, **pad)
+    calculate_label = Label(calculate_frm, text="X:", width=1)
+    calculate_entry = ttk.Entry(calculate_frm, width=12, justify='center')
+    result_label = Label(calculate_frm, text="Y", width=15, bg="white", fg='black', font=("Courier", 11))
+    calculate_button = ttk.Button(calculate_frm, cursor='hand2', text="=", width=3,
+                                  command=lambda: calculate_function(calculate_entry, result_label))
+
+    calculate_label.grid(row=0, column=0)
+    calculate_entry.grid(row=0, column=1)
+    calculate_button.grid(row=0, column=2)
+    result_label.grid(row=0, column=3)
+
+
 def open_window(points: str = None, file_path: str = None):
     global entries, l_square, info_label, root
     print("Opening GUI")
 
-    config_root()
-    frm = Frame(root)
-    frm.grid(padx=50, pady=10)
+    frm = config_root()
 
     pad = {"padx": 2, "pady": 2}
 
@@ -105,7 +154,6 @@ def open_window(points: str = None, file_path: str = None):
 
     Label(frm, text="X").grid(column=0, row=0, **pad)
     Label(frm, text="Y").grid(column=1, row=0, **pad)
-
     entries = Entries(frm, column=0, row=1)
 
     points = parse_args(points, file_path)
@@ -117,19 +165,6 @@ def open_window(points: str = None, file_path: str = None):
     while entries.count < 2:
         entries.add_entry()
 
-    load_file_button = ttk.Button(frm, text="Load from file", command=load_points_from_file, width=40)
-    load_file_button.grid(column=2, row=1, **pad)
-    load_str_button = ttk.Button(frm, text="Load From String", command=load_points_from_string, width=40)
-    load_str_button.grid(column=2, row=2, **pad)
-    add_button = ttk.Button(frm, text="Add Point", command=entries.add_entry, width=40)
-    add_button.grid(column=2, row=3, **pad)
-    remove_button = ttk.Button(frm, text="Remove Point", command=entries.remove_entry, width=40)
-    remove_button.grid(column=2, row=4, **pad)
-    compute_button = ttk.Button(frm, text="Compute", command=compute_func, width=40)
-    compute_button.grid(column=2, row=5, **pad)
-    show_button = ttk.Button(frm, text="Show Function Graph", command=show_graph, width=40)
-    show_button.grid(column=2, row=6, **pad)
-    show_button = ttk.Button(frm, text="Print Errors Table", command=print_error_table, width=40)
-    show_button.grid(column=2, row=7, **pad)
+    render_left_side(frm, pad)
 
     root.mainloop()

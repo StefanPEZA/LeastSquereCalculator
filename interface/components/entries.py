@@ -18,15 +18,19 @@ class Entries:
     def get_points(self):
         points = list()
         for entry in self.entries:
-            x = float(entry.get("x").get())
-            y = float(entry.get("y").get())
-            points.append((x, y))
+            x = entry.get("x").get()
+            y = entry.get("y").get()
+            if x.strip() == "" or y.strip() == "":
+                continue
+            points.append((float(x.strip()), float(y.strip())))
         return points
 
     def add_entry(self, x="", y=""):
         pad = {"padx": 2, "pady": 2}
+
         e1 = ttk.Entry(self.root, width=20, justify='center')
         e2 = ttk.Entry(self.root, width=20, justify='center')
+
         e1.grid(column=self.column, row=self.row + self.count, **pad)
         e2.grid(column=self.column + 1, row=self.row + self.count, **pad)
         Entries.set_text(e1, x)
