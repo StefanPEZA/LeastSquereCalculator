@@ -4,7 +4,7 @@ from utils.lsquere_error import LSquereError
 class LeastSquare:
     def __init__(self, points: list):
         self.points = set(points)
-        self.m = 1
+        self.m = None
         self.b = 0
 
     def get_points(self) -> list:
@@ -17,6 +17,9 @@ class LeastSquare:
         self.points.update(points)
 
     def get_function(self):
+        if self.m is None:
+            return None
+
         def func(x: float):
             return self.m * x + self.b
 
@@ -25,6 +28,10 @@ class LeastSquare:
     def get_points_lists(self):
         xs, ys = zip(*self.get_points())
         func = self.get_function()
+
+        if func is None:
+            return xs, ys, None
+
         fys = [func(x) for x in xs]
         return xs, ys, fys
 
@@ -40,7 +47,10 @@ class LeastSquare:
         return table + "\n"
 
     def get_function_string(self):
-        func_str = f"y = {round(self.m, 4)} * x + {round(self.b, 4)}"
+        if self.m is None:
+            func_str = f"x = {self.get_points()[0][0]}"
+        else:
+            func_str = f"y = {round(self.m, 4)} * x + {round(self.b, 4)}"
         return func_str
 
     def compute_function(self):
@@ -48,8 +58,11 @@ class LeastSquare:
             raise LSquereError("You need to provide at least 2 points!")
         x2, xy = self.__compute_step1()
         sum_x, sum_y, sum_x2, sum_xy = self.__compute_step2(x2, xy)
-        self.m = self.__compute_slope(sum_x, sum_y, sum_x2, sum_xy)
-        self.b = self.__compute_intercept(sum_x, sum_y)
+        try:
+            self.m = self.__compute_slope(sum_x, sum_y, sum_x2, sum_xy)
+            self.b = self.__compute_intercept(sum_x, sum_y)
+        except ZeroDivisionError:
+            pass
 
     def __compute_step1(self):
         x2 = list()

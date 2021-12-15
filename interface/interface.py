@@ -80,7 +80,10 @@ def calculate_function(entry: ttk.Entry, label: Label):
         global l_square
         func = l_square.get_function()
         x = float(entry.get())
-        result = round(func(x), 4)
+        if func is None:
+            result = "constant"
+        else:
+            result = round(func(x), 4)
         label.config(text=str(result))
     except ValueError:
         return
