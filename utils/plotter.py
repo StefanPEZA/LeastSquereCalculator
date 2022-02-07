@@ -15,14 +15,14 @@ class Plotter:
         plt.cla()
         plt.title("Least Square Function: " + self.title)
 
-        plt.plot(self.xs, self.ys, color="green", linewidth=1, alpha=0.5)
-
         if self.fys is not None:
             xy1 = (self.xs[0], self.fys[0])
             xy2 = (self.xs[-1], self.fys[-1])
             plt.axline(xy1, xy2, color="red")
             for i in range(len(self.xs)):
                 plt.vlines(self.xs[i], ymin=self.ys[i], ymax=self.fys[i], color="green", linestyles=":", alpha=0.5)
+
+        plt.plot(self.xs, self.ys, color="green", linewidth=1, alpha=0.5)
 
         plt.scatter(self.xs, self.ys, marker="o", color="green", alpha=0.8)
         for i in range(len(self.xs)):

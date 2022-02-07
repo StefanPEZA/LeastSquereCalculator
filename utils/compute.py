@@ -48,7 +48,7 @@ class LeastSquare:
 
     def get_function_string(self):
         if self.m is None:
-            func_str = f"x = {self.get_points()[0][0]}"
+            func_str = f"x = {self.get_points()[0][0]} (constant)"
         else:
             func_str = f"y = {round(self.m, 4)} * x + {round(self.b, 4)}"
         return func_str
